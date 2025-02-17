@@ -1,0 +1,17 @@
+# Sanal ortam dosyaları
+venv/
+__pycache__/
+
+# OpenAI API anahtarı içeren dosya
+.env
+
+# Derlenmiş Python dosyaları
+*.pyc
+*.pyo
+*.pyd
+
+# IDE ve işletim sistemi gereksiz dosyaları
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
