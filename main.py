@@ -2,16 +2,12 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import openai
 import os
-from dotenv import load_dotenv  # .env dosyasını yüklemek için
-
-# .env dosyasını yükle
-load_dotenv()
 
 app = FastAPI()
 
 # OpenAI API anahtarını ortam değişkeninden al
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-client = openai.Client(api_key=OPENAI_API_KEY)
+openai.api_key = os.getenv("OPENAI_API_KEY")
+client = openai.OpenAI(api_key=openai.api_key)
 
 class ChatRequest(BaseModel):
     message: str
@@ -26,3 +22,13 @@ async def chat(request: ChatRequest):
         return {"response": response.choices[0].message.content}
     except Exception as e:
         return {"error": str(e)}
+
+# 🌟 Yeni eklenen root endpoint
+@app.get("/")
+def read_root():
+    return {"message": "API çalışıyor!"}
+
+# 🌟 Uvicorn ile başlatma kodu
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
